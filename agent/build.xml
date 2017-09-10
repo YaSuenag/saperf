@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+   Copyright (C) 2017 Yasumasa Suenaga
+
+   This file is part of SA perf.
+
+   SA perf is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   SA perf is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
+
+   You should have received a copy of the GNU Lesser General Public License
+   along with SA perf.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<project name="saperf-agent" default="all">
+
+  <target name="compile">
+    <javac srcdir="src" destdir="build" source="6" target="6" debug="on"/>
+  </target>
+
+  <target name="clean">
+    <delete dir="build/com" includeEmptyDirs="true"/>
+    <delete file="dist/saperf-agent.jar"/>
+  </target>
+
+  <target name="jar" depends="compile">
+    <jar destfile="dist/saperf-agent.jar">
+        <zipfileset dir="build" excludes=".gitkeep"/>
+        <manifest>
+            <attribute name="Premain-Class" value="com.yasuenag.saperf.agent.AgentMain" />
+            <attribute name="Agent-Class" value="com.yasuenag.saperf.agent.AgentMain" />
+        </manifest>
+    </jar>
+  </target>
+
+  <target name="all" depends="jar"/>
+</project>
