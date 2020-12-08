@@ -28,10 +28,14 @@ $ ./saperf-driver.sh <options>
 ```
 
 `<optins>` will be passed to `java` .
-If you want to run it on JDK 9, you need to pass `--jdk9` to options of `saperf-driver.sh`
+If you want to run it on JDK 9 or later, you need to pass `--jdk9` or `--jdk10` to options of `saperf-driver.sh`
 
 ```
 $ ./saperf-driver.sh --jdk9 <options>
+```
+
+```
+$ ./saperf-driver.sh --jdk10 <options>
 ```
 
 ## Partially profiling
