@@ -20,11 +20,18 @@
 SAPERF_HOME=`dirname $0 | xargs readlink -f`
 
 JDK9=0
+METHOD_INDEX=3
 TARGET_PID=''
 
 if [ $1 == '--jdk9' ]; then
   JDK9=1
   TARGET_PID=$2
+elif [ $1 == '--jdk10' ]; then
+  JDK9=1
+  TARGET_PID=$2
+
+  # JDK-8183151: DCmd Compiler.codelist should print all compiled methods
+  METHOD_INDEX=4
 else
   TARGET_PID=$1
 fi
@@ -61,7 +68,7 @@ else
       continue
     fi
 
-    METHOD=`echo $line | cut -d' ' -f 3`
+    METHOD=`echo $line | cut -d' ' -f $METHOD_INDEX`
     START=`echo $line | sed -e 's/^.\+\(0x[0-9a-f]\+\) \- .\+$/\1/'`
     END=`echo $line | sed -e 's/^.\+ - \(0x[0-9a-f]\+\).\+$/\1/'`
     SIZE=`printf '%x' $(($END - $START))`
