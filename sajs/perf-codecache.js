@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Yasumasa Suenaga
+ * Copyright (C) 2017, 2020, Yasumasa Suenaga
  *
  * This file is part of SA perf.
  *
@@ -23,9 +23,14 @@ function perfcodecache(){
   var visit = function(blob){
     var addr = Number(blob.codeBegin());
     var size = Number(blob.getCodeSize());
-    var method = blob.getName();
+    try{
+      var method = blob.getName();
 
-    writeln(addr.toString(16) + " " + size.toString(16) + " " + method);
+      writeln(addr.toString(16) + " " + size.toString(16) + " " + method);
+    }
+    catch(e){
+      writeln(addr.toString(16) + " " + size.toString(16) + " <Unknown 0x" + Number(blob.getAddress()).toString(16) + ">");
+    }
   } 
 
   sa.codeCache.iterate(new sapkg.code.CodeCacheVisitor(){
